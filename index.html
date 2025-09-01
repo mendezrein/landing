@@ -1,4 +1,25 @@
 <!DOCTYPE html>
+<!--
+                                         /$$                    
+                                        | $$                    
+ /$$$$$$/$$$$   /$$$$$$  /$$$$$$$   /$$$$$$$  /$$$$$$  /$$$$$$$$
+| $$_  $$_  $$ /$$__  $$| $$__  $$ /$$__  $$ /$$__  $$|____ /$$/
+| $$ \ $$ \ $$| $$$$$$$$| $$  \ $$| $$  | $$| $$$$$$$$   /$$$$/ 
+| $$ | $$ | $$| $$_____/| $$  | $$| $$  | $$| $$_____/  /$$__/  
+| $$ | $$ | $$|  $$$$$$$| $$  | $$|  $$$$$$$|  $$$$$$$ /$$$$$$$$
+|__/ |__/ |__/ \_______/|__/  |__/ \_______/ \_______/|________/
+                                                                
+                                                                
+                                                                
+                     /$$                                        
+                    |__/                                        
+  /$$$$$$   /$$$$$$  /$$ /$$$$$$$                               
+ /$$__  $$ /$$__  $$| $$| $$__  $$                              
+| $$  \__/| $$$$$$$$| $$| $$  \ $$                              
+| $$      | $$_____/| $$| $$  | $$                              
+| $$      |  $$$$$$$| $$| $$  | $$                              
+|__/       \_______/|__/|__/  |__/                              
+-->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -11,13 +32,6 @@
 <meta name="keywords" content="Reinaldo Mendez, Diseñador gráfico, Performance Graphic Design, Behance, Illustrator, Photoshop, After Effects, AI Imagen Video, Portafolio, mendezrein">
 <meta name="author" content="Reinaldo Mendez">
 
-<!-- Open Graph / LinkedIn -->
-<meta property="og:title" content="@mendezrein - Performance Graphic Designer">
-<meta property="og:description" content="Reinaldo Mendez, designer specialized in performance graphics, illustration, and multimedia.">
-<meta property="og:image" content="https://mendezrein.github.io/landing/mendezreinprofile-links.jpg">
-<meta property="og:url" content="https://mendezrein.github.io/landing/">
-<meta property="og:type" content="website">
-
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
@@ -29,7 +43,7 @@
     display: flex;
     justify-content: center; 
     align-items: center;     
-    height: 100vh;           
+    min-height: 90vh;           
     color: #ffa500;
   }
 
@@ -49,7 +63,7 @@
     align-items: center;
     gap: 3px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   .profile-pic {
@@ -63,7 +77,6 @@
     margin-bottom: 20px;
   }
 
-  /* rotating dashed ring */
   .profile-pic::before {
     content: "";
     position: absolute;
@@ -75,7 +88,7 @@
     border: 5px dashed #ffa500;
     border-radius: 50%;
     box-sizing: border-box;
-    animation: rotateRing 16s linear infinite; /* half speed */
+    animation: rotateRing 16s linear infinite;
   }
 
   @keyframes rotateRing {
@@ -115,6 +128,7 @@
     justify-content: center;
     gap: 40px;
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .column {
@@ -124,6 +138,7 @@
     gap: 20px;
     max-width: 250px;
     flex: 1;
+    min-width: 200px;
   }
 
   .link-container, .skills {
@@ -208,40 +223,34 @@
 
   @media (max-width: 767px) {
     .wrapper {
-      scale:.8;
-      padding: 0 50px 0px 20px ;
+      scale:.9;
+      padding: 0 10px;
     }
     .content {
-      gap: 20px; 
+      flex-direction: row; 
+      flex-wrap: wrap; 
+      justify-content: center;
+      gap: 20px;
     }
   }
 </style>
 </head>
 <body>
 
-<!--
-                                         /$$                    
-                                        | $$                    
- /$$$$$$/$$$$   /$$$$$$  /$$$$$$$   /$$$$$$$  /$$$$$$  /$$$$$$$$
-| $$_  $$_  $$ /$$__  $$| $$__  $$ /$$__  $$ /$$__  $$|____ /$$/
-| $$ \ $$ \ $$| $$$$$$$$| $$  \ $$| $$  | $$| $$$$$$$$   /$$$$/ 
-| $$ | $$ | $$| $$_____/| $$  | $$| $$  | $$| $$_____/  /$$__/  
-| $$ | $$ | $$|  $$$$$$$| $$  | $$|  $$$$$$$|  $$$$$$$ /$$$$$$$$
-|__/ |__/ |__/ \_______/|__/  |__/ \_______/ \_______/|________/
--->
-
 <div class="wrapper">
+  <!-- Perfil primero -->
+  <div class="profile-block">
+    <div class="profile-pic">
+      <img src="mendezreinprofile-links.jpg" alt="Mendez Rein">
+    </div>
+    <div class="name">@mendezrein</div>
+    <div class="subtitle">Performance Graphic Desing</div>
+    <div class="counter">Visitantes 🐈: <span id="visitorCount"></span></div>
+  </div>
+
+  <!-- Dos columnas después -->
   <div class="content">
     <div class="column">
-      <div class="profile-block">
-        <div class="profile-pic">
-          <img src="mendezreinprofile-links.jpg" alt="Reinaldo Mendez">
-        </div>
-        <div class="name">@mendezrein</div>
-        <div class="subtitle">Performance Graphic Desing</div>
-        <div class="counter">Visitantes 🐈: <span id="visitorCount"></span></div>
-      </div>
-
       <div class="link-container">
         <a href="https://www.behance.net/mendezrein" target="_blank">
           <img src="https://www.google.com/s2/favicons?sz=64&domain=behance.net" alt="Behance"> Behance
@@ -255,6 +264,12 @@
         <a href="https://github.com/mendezrein/" target="_blank">
           <img src="https://www.google.com/s2/favicons?sz=64&domain=github.com" alt="GitHub"> GitHub
         </a>
+        <a href="https://wa.me/56992105302?text=Buenas🖖,%20Nos%20interesa%20trabajar%20contigo,%20tienes%20tiempo%20para%20una%20reunión%20prescencial/online?%3A%0A👨🏻‍💼Cliente:%0A🗓️Horarios%20Disponibles:%0A📈Proyecto:" target="_blank">
+          <img src="https://www.google.com/s2/favicons?sz=64&domain=whatsapp.com" alt="WhatsApp"> WhatsApp
+        </a>
+        <a href="mailto:rein.mendezcarrion+laboral@gmail.com" target="_blank">
+          <img src="https://www.google.com/s2/favicons?sz=64&domain=google.com" alt="Correo"> Gmail
+        </a>
       </div>
     </div>
 
@@ -264,27 +279,22 @@
           <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=adobe.com"> Photoshop</div>
           <div class="skill-bar"><div class="skill-fill" data-value="90"></div></div>
         </div>
-
         <div class="skill">
           <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=adobe.com"> Illustrator</div>
           <div class="skill-bar"><div class="skill-fill" data-value="70"></div></div>
         </div>
-
         <div class="skill">
           <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=adobe.com"> After Effects</div>
           <div class="skill-bar"><div class="skill-fill" data-value="80"></div></div>
         </div>
-
         <div class="skill">
           <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=openai.com"> AI Imagen Video</div>
           <div class="skill-bar"><div class="skill-fill" data-value="70"></div></div>
         </div>
-
         <div class="skill">
           <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=github.com"> Programación</div>
           <div class="skill-bar"><div class="skill-fill" data-value="40"></div></div>
         </div>
-
         <div class="skill">
           <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=microsoft.com"> Excel</div>
           <div class="skill-bar"><div class="skill-fill" data-value="50"></div></div>
@@ -296,7 +306,7 @@
 
 <script>
 function randomVisitors() {
-  return Math.floor(Math.random() * 2) + 1; // 1 to 3
+  return Math.floor(Math.random() * 2) + 1;
 }
 
 const visitorCount = document.getElementById('visitorCount');
