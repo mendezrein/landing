@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mendezrein.github.io/landing/sitemap.xml
