@@ -20,321 +20,704 @@
 -->
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="google-site-verification" content="PIA4mrE1H2BE1QVcHIU5eL9SM9Wb7xcjpPOiyoyeDt8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>@mendezrein links</title>
-<link rel="canonical" href="https://mendezrein.github.io/landing/">
-<link rel="icon" href="https://www.google.com/s2/favicons?sz=64&domain=github.com">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="google-site-verification" content="PIA4mrE1H2BE1QVcHIU5eL9SM9Wb7xcjpPOiyoyeDt8" />
+    <title>@mendezrein links</title>
+    <link rel="canonical" href="https://mendezrein.github.io/landing/">
+    <link rel="icon" href="https://www.google.com/s2/favicons?sz=64&domain=github.com">
+    
+    <!-- SEO -->
+    <meta name="description" content="Reinaldo Mendez Diseñador gráfico especializado en diseño de performance, branding, inteligencia artificial y multimedia.">
+    <meta name="keywords" content="Reinaldo Mendez, Diseñador gráfico, Performance Graphic Design, Behance, Illustrator, Photoshop, After Effects, AI Imagen Video, Portafolio, mendezrein">
+    <meta name="author" content="Reinaldo Méndez">
+    
+    <!-- Open Graph / LinkedIn -->
+    <meta property="og:title" content="@mendezrein - Performance Graphic Designer">
+    <meta property="og:description" content="Reinaldo Mendez, designer specialized in performance graphics, artificial intelligence and multimedia.">
+    <meta property="og:image" content="https://mendezrein.github.io/landing/mendezreinprofile-links.jpg">
+    <meta property="og:url" content="https://mendezrein.github.io/landing/">
+    <meta property="og:type" content="website">
 
-<!-- SEO -->
-<meta name="description" content="Reinaldo Mendez Diseñador gráfico especializado en diseño de performance, branding, inteligencia artificial y multimedia.">
-<meta name="keywords" content="Reinaldo Mendez, Diseñador gráfico, Performance Graphic Design, Behance, Illustrator, Photoshop, After Effects, AI Imagen Video, Portafolio, mendezrein">
-<meta name="author" content="Reinaldo Méndez">
+    <!-- Performance: Preconnect to Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
-<!-- Open Graph / LinkedIn -->
-<meta property="og:title" content="@mendezrein - Performance Graphic Designer">
-<meta property="og:description" content="Reinaldo Mendez, designer specialized in performance graphics, artificial intelligence and multimedia.">
-<meta property="og:image" content="https://mendezrein.github.io/landing/mendezreinprofile-links.jpg">
-<meta property="og:url" content="https://mendezrein.github.io/landing/">
-<meta property="og:type" content="website">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: rgba(31, 31, 31, 0.4);
+            --card-border: rgba(255, 165, 0, 0.15);
+            --accent: #ffa500;
+            --text-light: #ffffff;
+            --shadow-light: rgba(255, 255, 255, 0.05);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            --blur-amount: 16px;
+        }
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+        * {
+            box-sizing: border-box;
+        }
 
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
-    background: #1a1a1a;
-    display: flex;
-    justify-content: center; 
-    align-items: center;     
-    min-height: 90vh;           
-    color: #ffa500;
-  }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--accent);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: crosshair; /* Subtle hint for interactivity */
+        }
 
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0 15px;
-  }
+        /* --- LAYER 0: GAME OF LIFE CANVAS --- */
+        #golCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.6;
+        }
 
-  .profile-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    text-align: center;
-    margin-bottom: 50px;
-    scale: 1.5;
-  }
+        /* --- LAYER 1: FROST BLUR --- */
+        .frost-ambient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
+            background: radial-gradient(circle at center, rgba(18,18,18,0.5) 0%, rgba(18,18,18,0.85) 100%);
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
 
-  .profile-pic {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    padding: 5px;
-    background: #1a1a1a;
-    box-shadow: 8px 8px 15px #141414, -8px -8px 15px #242424;
-    margin-bottom: 20px;
-  }
+        /* --- RIVA TUNER OSD STYLE MONITOR --- */
+        .osd-monitor {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            font-size: 13px;
+            color: #ffffff;
+            z-index: 9999;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px;
+            border-radius: 4px;
+            backdrop-filter: blur(4px);
+            border-left: 2px solid var(--accent);
+            text-shadow: 1px 1px 0 #000;
+            user-select: none;
+        }
 
-  .profile-pic::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(100% + 20px);
-    height: calc(100% + 20px);
-    border: 5px dashed #ffa500;
-    border-radius: 50%;
-    box-sizing: border-box;
-    animation: rotateRing 16s linear infinite;
-  }
+        .osd-row {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
 
-  @keyframes rotateRing {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
-  }
+        /* Interactive Toggle Style */
+        .osd-row.clickable {
+            cursor: pointer;
+            background: rgba(255, 165, 0, 0.1);
+            margin: -2px -4px 2px -4px;
+            padding: 2px 4px;
+            border-radius: 2px;
+            transition: background 0.2s;
+        }
+        
+        .osd-row.clickable:hover {
+            background: rgba(255, 165, 0, 0.3);
+        }
 
-  .profile-pic img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+        .osd-label {
+            color: var(--accent);
+            font-weight: bold;
+            min-width: 40px;
+        }
 
-  .name {
-    color: #ffa500;
-    font-weight: 700;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-  }
+        .osd-value {
+            color: #fff;
+            text-align: right;
+        }
 
-  .subtitle {
-    color: #ffa500;
-    font-weight: 400;
-    font-size: 0.7rem;
-  }
+        /* --- LAYER 2: CONTENT --- */
+        .wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 20px;
+            z-index: 1;
+        }
 
-  .counter {
-    color: #ffa500;
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
+        .profile-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            transform: scale(1.2); 
+        }
 
-  .content {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 40px;
-    width: 100%;
-    flex-wrap: wrap;
-  }
+        .profile-pic-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+        }
 
-  .column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    max-width: 250px;
-    flex: 1;
-    min-width: 200px;
-  }
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            padding: 5px;
+            background: rgba(18,18,18,0.8);
+            box-shadow: 0 0 25px rgba(255, 165, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
 
-  .link-container, .skills {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    max-width: 250px;
-  }
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
 
-  .link-container a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    justify-content: center;
-    padding: 15px;
-    border-radius: 15px;
-    background: #1f1f1f;
-    color: #ffffff;
-    font-weight: 600;
-    box-shadow: 5px 5px 10px #141414, -5px -5px 10px #242424;
-    transition: all 0.2s ease-in-out;
-    border: 2px solid transparent;
-  }
+        .ring {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 4px dashed var(--accent);
+            border-radius: 50%;
+            animation: rotateRing 20s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.7;
+        }
 
-  .link-container a:hover {
-    box-shadow: inset 5px 5px 10px #141414, inset -5px -5px 10px #242424;
-    transform: scale(1.03);
-    border: 2px solid #ffa500;
-  }
+        @keyframes rotateRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-  .link-container img {
-    width: 20px;
-    height: 20px;
-  }
+        .name {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
 
-  .skill {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 15px;
-    border-radius: 15px;
-    background: #1f1f1f;
-    color: #ffffff;
-    box-shadow: 5px 5px 10px #141414, -5px -5px 10px #242424;
-    border: 2px solid transparent;
-    width: 100%;
-  }
+        .subtitle {
+            color: var(--accent);
+            font-weight: 400;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            text-shadow: 0 1px 4px rgba(0,0,0,1);
+        }
 
-  .skill:hover {
-    border: 2px solid #ffa500;
-  }
+        .counter {
+            margin-top: 5px;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
 
-  .skill-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #ffa500;
-  }
+        .content {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
 
-  .skill-label img {
-    width: 24px;
-    height: 24px;
-  }
+        .column {
+            flex: 1;
+            min-width: 260px;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+        }
 
-  .skill-bar {
-    width: 100%;
-    height: 8px;
-    background: #2a2a2a;
-    border-radius: 5px;
-    overflow: hidden;
-  }
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--blur-amount));
+            -webkit-backdrop-filter: blur(var(--blur-amount));
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s, background 0.3s;
+        }
 
-  .skill-fill {
-    height: 100%;
-    background: #ffa500;
-    width: 0;
-  }
+        .link-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
 
-  @media (max-width: 767px) {
-    .wrapper {
-      scale:.9;
-      padding: 0 50px 0px 20px ;
-    }
-    .content {
-      flex-direction: row; 
-      flex-wrap: wrap; 
-      justify-content: center;
-      gap: 20px;
-    }
-  }
-</style>
+        .link-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            padding: 16px 20px;
+            color: var(--text-light);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-btn:hover {
+            border-color: var(--accent);
+            background: rgba(31, 31, 31, 0.8);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 20px rgba(255, 165, 0, 0.15);
+        }
+
+        .link-btn img {
+            width: 22px;
+            height: 22px;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.3));
+        }
+
+        .skills {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .skill-card {
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .skill-header img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .skill-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #ffcc00);
+            width: 0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+        }
+
+        /* Utility class to invert icon colors */
+        /* Updated selector to override .link-btn img specificity */
+        .link-btn img.invert-icon, 
+        .invert-icon {
+            filter: invert(1);
+        }
+
+        /* Footer Styles */
+        .footer-hint {
+            margin-top: 40px;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 165, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .wrapper {
+                padding: 40px 15px;
+            }
+            .profile-block {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="wrapper">
-  <!-- Perfil primero -->
-  <div class="profile-block">
-    <div class="profile-pic">
-      <img src="mendezreinprofile-links.jpg" alt="Mendez Rein">
-    </div>
-    <div class="name">@mendezrein</div>
-    <div class="subtitle">Performance Graphic Desing</div>
-    <div class="counter">Visitantes 🐈: <span id="visitorCount"></span></div>
-  </div>
-
-  <!-- Dos columnas después -->
-  <div class="content">
-    <div class="column">
-      <div class="link-container">
-        <a href="https://www.behance.net/mendezrein" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=behance.net" alt="Behance"> Behance
-        </a>
-        <a href="http://instagram.com/mendezrein" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=instagram.com" alt="Instagram"> Instagram
-        </a>
-        <a href="https://cl.linkedin.com/in/mendezrein" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=linkedin.com" alt="LinkedIn"> LinkedIn
-        </a>
-        <a href="https://github.com/mendezrein/" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=github.com" alt="GitHub"> GitHub
-        </a>
-        <a href="https://wa.me/56992105302?text=Buenas🖖,%20Nos%20interesa%20trabajar%20contigo,%20tienes%20tiempo%20para%20una%20reunión%20prescencial/online?%3A%0A👨🏻‍💼Cliente:%0A🗓️Horarios%20Disponibles:%0A📈Proyecto:" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=whatsapp.com" alt="WhatsApp"> WhatsApp
-        </a>
-        <a href="https://mendezrein.github.io/cuanto_falta_pal_18/" target="_blank">
-          <img src="https://www.google.com/s2/favicons?sz=64&domain=gob.cl" alt="Correo"> ¿Cuánto falta pal' 18?
-        </a>
-      </div>
+    <!-- OSD / RivaTuner Monitor -->
+    <div class="osd-monitor">
+        <div class="osd-row clickable" id="frost-toggle" title="Toggle Frost Effect">
+            <span class="osd-label">FX</span> <span class="osd-value" id="osd-frost">ON</span>
+        </div>
+        <div class="osd-row"><span class="osd-label">FPS</span> <span class="osd-value" id="osd-fps">--</span></div>
+        <div class="osd-row"><span class="osd-label">FRAMETIME</span> <span class="osd-value" id="osd-ft">--ms</span></div>
+        <div class="osd-row"><span class="osd-label">ALIVE</span> <span class="osd-value" id="osd-alive">0</span></div>
+        <div class="osd-row"><span class="osd-label">MEM</span> <span class="osd-value" id="osd-mem">--</span></div>
+        <div class="osd-row"><span class="osd-label">RES</span> <span class="osd-value" id="osd-res">--</span></div>
     </div>
 
-    <div class="column">
-      <div class="skills">
-        <div class="skill">
-          <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=adobe.com"> Photoshop</div>
-          <div class="skill-bar"><div class="skill-fill" data-value="90"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=adobe.com"> Illustrator</div>
-          <div class="skill-bar"><div class="skill-fill" data-value="70"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=adobe.com"> After Effects</div>
-          <div class="skill-bar"><div class="skill-fill" data-value="80"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=openai.com"> AI Imagen Video</div>
-          <div class="skill-bar"><div class="skill-fill" data-value="70"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=github.com"> Programación</div>
-          <div class="skill-bar"><div class="skill-fill" data-value="40"></div></div>
-        </div>
-        <div class="skill">
-          <div class="skill-label"><img src="https://www.google.com/s2/favicons?sz=64&domain=microsoft.com"> Excel</div>
-          <div class="skill-bar"><div class="skill-fill" data-value="30"></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    <!-- Game of Life Canvas (Bottom Layer) -->
+    <canvas id="golCanvas"></canvas>
+    
+    <!-- Frost Effect Layer (Middle Layer) -->
+    <div class="frost-ambient"></div>
 
-<script>
-function randomVisitors() {
-  return Math.floor(Math.random() * 2) + 1;
-}
+    <main class="wrapper" id="mainContent">
+        <header class="profile-block">
+            <div class="profile-pic-container">
+                <div class="ring"></div>
+                <div class="profile-pic">
+                    <img src="mendezreinprofile-links.jpg" 
+                         alt="Reinaldo Mendez" 
+                         onerror="this.src='https://ui-avatars.com/api/?name=Reinaldo+Mendez&background=1a1a1a&color=ffa500'">
+                </div>
+            </div>
+            <div class="name">@mendezrein</div>
+            <div class="subtitle">Performance Graphic Design</div>
+            <div class="counter">Visitantes 🐈: <span id="visitorCount">...</span></div>
+        </header>
 
-const visitorCount = document.getElementById('visitorCount');
-visitorCount.textContent = randomVisitors();
+        <div class="content">
+            <section class="column">
+                <nav class="link-container">
+                    <a href="https://www.behance.net/mendezrein" target="_blank" class="link-btn glass-card">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=behance.net" alt="Behance"> 
+                        Behance
+                    </a>
+                    <a href="http://instagram.com/mendezrein" target="_blank" class="link-btn glass-card">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=instagram.com" alt="Instagram"> 
+                        Instagram
+                    </a>
+                    <a href="https://cl.linkedin.com/in/mendezrein" target="_blank" class="link-btn glass-card">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=linkedin.com" alt="LinkedIn"> 
+                        LinkedIn
+                    </a>
+                    <a href="https://github.com/mendezrein/" target="_blank" class="link-btn glass-card">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=github.com" alt="GitHub" class="invert-icon"> 
+                        GitHub
+                    </a>
+                    <a href="https://wa.me/56992105302?text=Buenas🖖,%20Nos%20interesa%20trabajar%20contigo..." target="_blank" class="link-btn glass-card">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=whatsapp.com" alt="WhatsApp"> 
+                        WhatsApp
+                    </a>
+                    <a href="https://mendezrein.github.io/cuanto_falta_pal_18/" target="_blank" class="link-btn glass-card">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=gob.cl" alt="Correo"> 
+                        ¿Cuánto falta pal' 18?
+                    </a>
+                </nav>
+            </section>
 
-setInterval(() => {
-  visitorCount.textContent = randomVisitors();
-}, 60000);
+            <section class="column">
+                <div class="skills">
+                    <div class="skill-card glass-card">
+                        <div class="skill-header"><img src="https://www.google.com/s2/favicons?sz=64&domain=adobe.com"> Photoshop</div>
+                        <div class="skill-track"><div class="skill-fill" data-value="90"></div></div>
+                    </div>
+                    <div class="skill-card glass-card">
+                        <div class="skill-header"><img src="https://www.google.com/s2/favicons?sz=64&domain=adobe.com"> Illustrator</div>
+                        <div class="skill-track"><div class="skill-fill" data-value="70"></div></div>
+                    </div>
+                    <div class="skill-card glass-card">
+                        <div class="skill-header"><img src="https://www.google.com/s2/favicons?sz=64&domain=adobe.com"> After Effects</div>
+                        <div class="skill-track"><div class="skill-fill" data-value="80"></div></div>
+                    </div>
+                    <div class="skill-card glass-card">
+                        <div class="skill-header"><img src="https://www.google.com/s2/favicons?sz=64&domain=openai.com"> AI Imagen Video</div>
+                        <div class="skill-track"><div class="skill-fill" data-value="70"></div></div>
+                    </div>
+                    <div class="skill-card glass-card">
+                        <div class="skill-header"><img src="https://www.google.com/s2/favicons?sz=64&domain=github.com" class="invert-icon"> Programación</div>
+                        <div class="skill-track"><div class="skill-fill" data-value="40"></div></div>
+                    </div>
+                    <div class="skill-card glass-card">
+                        <div class="skill-header"><img src="https://www.google.com/s2/favicons?sz=64&domain=microsoft.com"> Excel</div>
+                        <div class="skill-track"><div class="skill-fill" data-value="30"></div></div>
+                    </div>
+                </div>
+            </section>
+        </div>
 
-window.addEventListener('load', () => {
-  document.querySelectorAll('.skill-fill').forEach(bar => {
-    const target = bar.getAttribute('data-value');
-    bar.style.width = "0%";
-    setTimeout(() => {
-      bar.style.transition = "width 2s ease";
-      bar.style.width = target + "%";
-    }, 300);
-  });
-});
-</script>
+        <footer class="footer-hint">
+            ✨ Tip: Toca el fondo para crear vida
+        </footer>
+    </main>
 
+    <script>
+        // --- Logic: Random Visitors ---
+        const visitorCount = document.getElementById('visitorCount');
+        function updateVisitors() {
+            visitorCount.textContent = Math.floor(Math.random() * 5) + 1;
+        }
+        updateVisitors();
+        setInterval(updateVisitors, 60000);
+
+        // --- Logic: Skill Bar Animations ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bar = entry.target;
+                    const target = bar.getAttribute('data-value');
+                    bar.style.transition = "width 1.5s cubic-bezier(0.22, 1, 0.36, 1)";
+                    bar.style.width = target + "%";
+                    observer.unobserve(bar);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.skill-fill').forEach(bar => {
+            observer.observe(bar);
+        });
+
+        // --- Logic: Endless Game of Life & Monitor ---
+        const canvas = document.getElementById('golCanvas');
+        const ctx = canvas.getContext('2d', { alpha: false });
+
+        // OSD Elements
+        const osdFrost = document.getElementById('osd-frost');
+        const frostToggleBtn = document.getElementById('frost-toggle');
+        const frostLayer = document.querySelector('.frost-ambient');
+
+        const osdFps = document.getElementById('osd-fps');
+        const osdFt = document.getElementById('osd-ft');
+        const osdAlive = document.getElementById('osd-alive');
+        const osdMem = document.getElementById('osd-mem');
+        const osdRes = document.getElementById('osd-res');
+
+        let width, height;
+        let cellSize = 15; 
+        let cols, rows;
+        let grid, nextGrid;
+        let frameCounter = 0;
+        
+        let fpsFrameCount = 0;
+        let lastFpsUpdate = 0;
+        let lastTime = 0;
+
+        // Frost Toggle Logic
+        let frostEnabled = true;
+        frostToggleBtn.addEventListener('click', () => {
+            frostEnabled = !frostEnabled;
+            if (frostEnabled) {
+                frostLayer.style.opacity = '1';
+                osdFrost.textContent = "ON";
+                osdFrost.style.color = "#fff";
+            } else {
+                frostLayer.style.opacity = '0';
+                osdFrost.textContent = "OFF";
+                osdFrost.style.color = "#555";
+            }
+        });
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            cols = Math.ceil(width / cellSize);
+            rows = Math.ceil(height / cellSize);
+            initGrid();
+            osdRes.textContent = `${width}x${height}`;
+        }
+
+        function initGrid() {
+            grid = new Uint8Array(cols * rows);
+            nextGrid = new Uint8Array(cols * rows);
+            seed(0.15); 
+        }
+
+        function seed(density = 0.1) {
+            for (let i = 0; i < cols * rows; i++) {
+                if (grid[i] === 0 && Math.random() < density) {
+                    grid[i] = 1;
+                }
+            }
+        }
+
+        function injectLife() {
+            const clusterX = Math.floor(Math.random() * (cols - 10));
+            const clusterY = Math.floor(Math.random() * (rows - 10));
+            for (let y = 0; y < 10; y++) {
+                for (let x = 0; x < 10; x++) {
+                    if (Math.random() > 0.5) {
+                        const idx = (clusterY + y) * cols + (clusterX + x);
+                        grid[idx] = 1;
+                    }
+                }
+            }
+        }
+
+        // --- INTERACTION LOGIC ---
+        function handleInteraction(e) {
+            // Prevent clicking logic if touching a link or the OSD button
+            if (e.target.closest('a') || e.target.closest('.clickable')) return;
+
+            let cx, cy;
+            if (e.touches && e.touches.length > 0) {
+                cx = e.touches[0].clientX;
+                cy = e.touches[0].clientY;
+            } else {
+                cx = e.clientX;
+                cy = e.clientY;
+            }
+
+            const gx = Math.floor(cx / cellSize);
+            const gy = Math.floor(cy / cellSize);
+            
+            // Inject a small explosion (3x3 grid) at touch point
+            let revived = false;
+            for(let y = -1; y <= 1; y++) {
+                for(let x = -1; x <= 1; x++) {
+                    const iy = gy + y;
+                    const ix = gx + x;
+                    if (iy >= 0 && iy < rows && ix >= 0 && ix < cols) {
+                        const idx = iy * cols + ix;
+                        grid[idx] = 1;
+                        revived = true;
+                    }
+                }
+            }
+            if(revived) draw(); // Immediate visual feedback
+        }
+
+        window.addEventListener('mousedown', handleInteraction);
+        window.addEventListener('touchstart', handleInteraction, { passive: true });
+
+        function draw() {
+            ctx.fillStyle = '#121212';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = '#ffa500';
+            ctx.beginPath();
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    if (grid[y * cols + x] === 1) {
+                        ctx.rect(x * cellSize, y * cellSize, cellSize - 1, cellSize - 1);
+                    }
+                }
+            }
+            ctx.fill();
+        }
+
+        function update() {
+            let activeCells = 0;
+            
+            for (let y = 0; y < rows; y++) {
+                const ym1 = (y - 1 + rows) % rows * cols;
+                const y0 = y * cols;
+                const yp1 = (y + 1 + rows) % rows * cols;
+                
+                for (let x = 0; x < cols; x++) {
+                    const xm1 = (x - 1 + cols) % cols;
+                    const xp1 = (x + 1 + cols) % cols;
+
+                    let neighbors = 
+                        grid[ym1 + xm1] + grid[ym1 + x] + grid[ym1 + xp1] +
+                        grid[y0 + xm1] +                  grid[y0 + xp1] +
+                        grid[yp1 + xm1] + grid[yp1 + x] + grid[yp1 + xp1];
+
+                    const cell = grid[y0 + x];
+                    const idx = y0 + x;
+
+                    if (cell === 1 && (neighbors < 2 || neighbors > 3)) {
+                        nextGrid[idx] = 0;
+                    } else if (cell === 0 && neighbors === 3) {
+                        nextGrid[idx] = 1;
+                    } else {
+                        nextGrid[idx] = cell;
+                    }
+                    if (nextGrid[idx] === 1) activeCells++;
+                }
+            }
+            let temp = grid;
+            grid = nextGrid;
+            nextGrid = temp;
+            return activeCells;
+        }
+
+        function gameLoop(timestamp) {
+            requestAnimationFrame(gameLoop);
+
+            // Unlocked Loop
+            const delta = timestamp - lastTime;
+            lastTime = timestamp;
+
+            const population = update();
+            draw();
+            
+            frameCounter++;
+            fpsFrameCount++;
+
+            // Update OSD
+            if (timestamp - lastFpsUpdate > 500) {
+                const fps = Math.round((fpsFrameCount * 1000) / (timestamp - lastFpsUpdate));
+                
+                osdFps.textContent = fps;
+                osdFt.textContent = delta.toFixed(2) + "ms";
+                osdAlive.textContent = population;
+                
+                if (performance && performance.memory) {
+                    const used = Math.round(performance.memory.usedJSHeapSize / 1048576);
+                    osdMem.textContent = used + " MB";
+                } else {
+                    osdMem.textContent = "N/A";
+                }
+
+                lastFpsUpdate = timestamp;
+                fpsFrameCount = 0;
+            }
+
+            // Endless Logic
+            if (population < 10 || frameCounter % 500 === 0) {
+                injectLife();
+            }
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        requestAnimationFrame(gameLoop);
+
+    </script>
 </body>
 </html>
