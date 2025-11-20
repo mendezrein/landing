@@ -25,7 +25,8 @@
     <meta name="google-site-verification" content="PIA4mrE1H2BE1QVcHIU5eL9SM9Wb7xcjpPOiyoyeDt8" />
     <title>@mendezrein links</title>
     <link rel="canonical" href="https://mendezrein.github.io/landing/">
-    <link rel="icon" href="https://www.google.com/s2/favicons?sz=64&domain=github.com">
+    <link rel="icon" src="fav.ico">
+  
     
     <!-- SEO -->
     <meta name="description" content="Reinaldo Mendez Diseñador gráfico especializado en diseño de performance, branding, inteligencia artificial y multimedia.">
@@ -576,12 +577,15 @@
         }
 
         function injectLife() {
-            const clusterX = Math.floor(Math.random() * (cols - 10));
-            const clusterY = Math.floor(Math.random() * (rows - 10));
+            // Allow spawning on the edges (removed -10 padding)
+            const clusterX = Math.floor(Math.random() * cols);
+            const clusterY = Math.floor(Math.random() * rows);
+            
             for (let y = 0; y < 10; y++) {
                 for (let x = 0; x < 10; x++) {
                     if (Math.random() > 0.5) {
-                        const idx = (clusterY + y) * cols + (clusterX + x);
+                        // Correct wrapping for index calculation during injection
+                        const idx = ((clusterY + y + rows) % rows) * cols + ((clusterX + x + cols) % cols);
                         grid[idx] = 1;
                     }
                 }
@@ -609,13 +613,13 @@
             let revived = false;
             for(let y = -1; y <= 1; y++) {
                 for(let x = -1; x <= 1; x++) {
-                    const iy = gy + y;
-                    const ix = gx + x;
-                    if (iy >= 0 && iy < rows && ix >= 0 && ix < cols) {
-                        const idx = iy * cols + ix;
-                        grid[idx] = 1;
-                        revived = true;
-                    }
+                    // Wrap the coordinates so clicks on edge affect other side
+                    const iy = (gy + y + rows) % rows;
+                    const ix = (gx + x + cols) % cols;
+                    
+                    const idx = iy * cols + ix;
+                    grid[idx] = 1;
+                    revived = true;
                 }
             }
             if(revived) draw(); // Immediate visual feedback
