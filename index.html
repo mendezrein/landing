@@ -571,10 +571,10 @@
             const gx = Math.floor(cx / cellSize);
             const gy = Math.floor(cy / cellSize);
             
-            // Inject a small explosion (3x3 grid) at touch point
+            // Inject a larger explosion (5x5 grid) at touch point
             let revived = false;
-            for(let y = -1; y <= 1; y++) {
-                for(let x = -1; x <= 1; x++) {
+            for(let y = -2; y <= 2; y++) {
+                for(let x = -2; x <= 2; x++) {
                     // Wrap the coordinates so clicks on edge affect other side
                     const iy = (gy + y + rows) % rows;
                     const ix = (gx + x + cols) % cols;
