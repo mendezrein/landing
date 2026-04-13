@@ -47,7 +47,7 @@
     <style>
         :root {
             --bg-color: #121212;
-            --card-bg: rgba(31, 31, 31, 0.4);
+            --card-bg: rgba(31, 31, 31, 0.85);
             --card-border: rgba(255, 165, 0, 0.15);
             --accent: #ffa500;
             --text-light: #ffffff;
@@ -99,7 +99,7 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
-            background: rgba(0, 0, 0, 0.5);
+            background: #000000;
             padding: 8px;
             border-radius: 4px;
             border-left: 2px solid var(--accent);
@@ -116,7 +116,7 @@
         /* Interactive Toggle Style */
         .osd-row.clickable {
             cursor: pointer;
-            background: rgba(255, 165, 0, 0.1);
+            background: #2a1a00;
             margin: -2px -4px 2px -4px;
             padding: 2px 4px;
             border-radius: 2px;
@@ -124,7 +124,7 @@
         }
         
         .osd-row.clickable:hover {
-            background: rgba(255, 165, 0, 0.3);
+            background: #4d3300;
         }
 
         .osd-label {
@@ -173,7 +173,7 @@
             height: 100%;
             border-radius: 50%;
             padding: 5px;
-            background: rgba(18,18,18,0.8);
+            background: #121212;
             box-shadow: 0 0 25px rgba(255, 165, 0, 0.2);
             position: relative;
             z-index: 2;
@@ -227,7 +227,7 @@
             color: var(--accent);
             font-size: 0.9rem;
             font-weight: 600;
-            background: rgba(0,0,0,0.6);
+            background: #000000;
             padding: 4px 12px;
             border-radius: 20px;
         }
@@ -277,7 +277,7 @@
 
         .link-btn:hover {
             border-color: var(--accent);
-            background: rgba(31, 31, 31, 0.8);
+            background: rgba(42, 42, 42, 0.9);
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 20px rgba(255, 165, 0, 0.15);
         }
@@ -322,7 +322,7 @@
         .skill-track {
             width: 100%;
             height: 6px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #333333;
             border-radius: 10px;
             overflow: hidden;
         }
@@ -348,7 +348,7 @@
             text-align: center;
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.6);
-            background: rgba(0, 0, 0, 0.4);
+            background: #1a1a1a;
             border-radius: 20px;
             border: 1px solid rgba(255, 165, 0, 0.1);
         }
@@ -460,7 +460,7 @@
         </div>
 
         <footer class="footer-hint">
-            ✨ Tip: Toca el fondo para crear vida
+            ✨ Tip: Mueve el cursor o toca el fondo para crear vida
         </footer>
     </main>
 
@@ -553,9 +553,18 @@
         }
 
         // --- INTERACTION LOGIC ---
+        let lastMoveTime = 0;
+
         function handleInteraction(e) {
             // Prevent clicking logic if touching a link or the OSD button
             if (e.target.closest('a') || e.target.closest('.clickable')) return;
+
+            // Throttle continuous movements for better performance and smoother trails
+            if (e.type === 'mousemove' || e.type === 'touchmove') {
+                const now = performance.now();
+                if (now - lastMoveTime < 16) return; // Limit to ~60 frames per second
+                lastMoveTime = now;
+            }
 
             let cx, cy;
             if (e.touches && e.touches.length > 0) {
@@ -569,24 +578,33 @@
             const gx = Math.floor(cx / cellSize);
             const gy = Math.floor(cy / cellSize);
             
-            // Inject a larger explosion (5x5 grid) at touch point
+            // Smaller radius for mousemove to prevent instant overcrowding
+            let radius = (e.type === 'mousemove' || e.type === 'touchmove') ? 1 : 2;
+            
+            // Inject explosion at touch/mouse point
             let revived = false;
-            for(let y = -2; y <= 2; y++) {
-                for(let x = -2; x <= 2; x++) {
+            for(let y = -radius; y <= radius; y++) {
+                for(let x = -radius; x <= radius; x++) {
                     // Wrap the coordinates so clicks on edge affect other side
                     const iy = (gy + y + rows) % rows;
                     const ix = (gx + x + cols) % cols;
                     
                     const idx = iy * cols + ix;
-                    grid[idx] = 1;
-                    revived = true;
+                    
+                    // Add organic randomness to the brush
+                    if (Math.random() > 0.2) {
+                        grid[idx] = 1;
+                        revived = true;
+                    }
                 }
             }
             if(revived) draw(); // Immediate visual feedback
         }
 
         window.addEventListener('mousedown', handleInteraction);
+        window.addEventListener('mousemove', handleInteraction);
         window.addEventListener('touchstart', handleInteraction, { passive: true });
+        window.addEventListener('touchmove', handleInteraction, { passive: true });
 
         function draw() {
             ctx.fillStyle = '#121212';
